@@ -4,11 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.eve.mapsdemo.MapsActivity">
+
+
+    <!--Button
+        android:id="@+id/geobutton"
+        android:text="Geocoder"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" /-->
+    <Button
+        android:id="@+id/nextbutton"
+        android:text="Next Page"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
 <fragment
     xmlns:tools="http://schemas.android.com/tools"
-
     android:id="@+id/map"
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
