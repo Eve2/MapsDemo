@@ -8,6 +8,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -30,14 +31,14 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.nearby.messages.Distance;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener{
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback{
 
     public GoogleMap mMap;
     public Button nextbutton;
-//    double lat1, lng1;
+    double lat1, lng1;
     public LocationManager lm;
-    double lat1 = 41.9171;
-    double lng1 = -88.265;
+ //   double lat1 = 41.9171;
+ //   double lng1 = -88.265;
 //    String provider;
 //    Location location;
 
@@ -54,6 +55,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         checkPermission();
 
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -61,25 +63,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         nextbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MapsActivity.this, GeocoderActivity.class);
+                Intent i = new Intent(MapsActivity.this, ShowLocationActivity.class);
                 startActivity(i);
             }
         });
 
-/*
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        lm.requestLocationUpdates("gps", 5000, 0, new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                checkPermission();
+                if (location != null) {
+                    lat1 = location.getLatitude();
+                    lng1 = location.getLongitude();
+                }
+            }
 
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            lat1 = location.getLatitude();
-                            lng1 = location.getLongitude();
-                        }
-                    }
-                });
-*/
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+
+            }
+        });
     }
 
 
@@ -142,7 +155,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
+/*
     @Override
     public void onLocationChanged(Location location) {
 
@@ -162,4 +175,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onProviderDisabled(String s) {
 
     }
+    */
 }
